@@ -1,0 +1,23 @@
+trigger TripTrigger on Trip__c (before insert, before update) {
+
+    
+
+    if(trigger.isBefore){
+
+        if(trigger.isInsert || trigger.isUpdate){
+
+            // Validating the Conductor Id in Trip is really a Conductor or not
+
+            TripTriggerHandlerClass.driverValidation(trigger.new);
+
+            
+
+            // Validating the Conductor Id in Trip is really a Conductor or not
+
+            TripTriggerHandlerClass.conductorValidation(trigger.new);
+
+        }
+
+    }  
+
+}
