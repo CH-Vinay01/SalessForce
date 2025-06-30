@@ -1,0 +1,76 @@
+Public class TripTriggerHandlerClass {
+
+
+// Checking whether the entered Driver Id belongs to a Driver or not
+
+ public Static void driverValidation(List<Trip__c> tripList){
+
+      List<Employee__c> driverList = [SELECT Id, Name FROM Employee__c WHERE Role__c ='Driver' ];
+
+     If(driverList != null){
+
+        Map<Id, String> driverMap = new Map<Id, String>();
+
+        for(Employee__c emp : driverList ){
+
+            driverMap.put(emp.Id, emp.Name);
+
+        }
+
+        for(Trip__c trip : tripList ){
+
+            If(trip.Driver_Id__c!=null){
+
+                 Boolean hasDriverId = driverMap.containskey(trip.Driver_Id__c); // hasDriverId will be true
+
+                 If(hasDriverId == false){
+
+                    trip.addError('The assigned person is not a Driver.');
+
+                 } 
+
+            }
+
+        } 
+
+     } 
+
+    }
+
+    
+
+// Checking whether the entered conductor Id belongs to a Conductor or not
+
+    public Static void conductorValidation(List<Trip__c> tripList){
+
+        List<Employee__c> conductorList = [SELECT Id, Name FROM Employee__c WHERE Role__c ='Conductor' ];
+
+        
+
+      Map<Id, String> conductorMap = new Map<Id, String>();
+
+        for(Employee__c emp : conductorList ){
+
+            conductorMap.put(emp.Id, emp.Name);
+
+        }
+
+        for(Trip__c trip : tripList ){
+
+            If(trip.Conductor_Id__c!=null){
+
+                 Boolean hasConductorId = conductorMap.containskey(trip.Conductor_Id__c); // hasConductorId will be true
+
+                 If(hasConductorId == false){
+
+                    trip.addError('The assigned person is not a Conductor.');
+
+                 } 
+
+            }           
+
+        } 
+
+    }
+
+}
